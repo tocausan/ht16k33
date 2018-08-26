@@ -1,13 +1,13 @@
 'use strict';
 
-const backpack = require('./backpack'),
+const Backpack = require('./backpack'),
     fonts = require('./14-segments-fonts');
 
-module.exports = class FourteenSegment {
+module.exports = class Segments {
     constructor(address, bus) {
         address = address || 0x70;
         bus = bus || 1;
-        this.display = new LedBackpack(address, bus);
+        this.display = new Backpack(address, bus);
         this.digits = fonts;
     }
 

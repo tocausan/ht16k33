@@ -1,7 +1,7 @@
-const segments = require('../library/14-segments'),
+const Segments = require('../library/14-segments'),
     moment = require('moment');
 
-const display = new segments(0x70, 1);
+const display = new Segments(0x70, 1);
 display.writeString('clock');
 
 setInterval(() => {
