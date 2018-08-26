@@ -15,7 +15,8 @@ module.exports = class LedBackpack {
         this.blinkRate2Hz = 0x01;
         this.blinkRate1Hz = 0x02;
         this.blinkRateHalfHz = 0x03;
-        this.wire.writeBytes(this.registerDisplaySetup | 0x01, [0x00], null);
+        this.wire.writeBytes(this.registerDisplaySetup | 0x01, [0x00], () => {
+        });
         this.setBlinkRate(this.blinkRateOff);
         this.setBrightness(10);
         this.clear();
@@ -25,12 +26,14 @@ module.exports = class LedBackpack {
         // brightness 0-15
         if (brightness > 15) brightness = 15;
         if (brightness < 0) brightness = 0;
-        this.wire.writeBytes(this.registerDimming | brightness, [0x00], null);
+        this.wire.writeBytes(this.registerDimming | brightness, [0x00], () => {
+        });
     }
 
     setBlinkRate(blinkRate) {
         if (blinkRate > this.blinkRateHalfHz) blinkRate = this.blinkRateOff;
-        this.wire.writeBytes(this.registerDisplaySetup | 0x01 | (blinkRate << 1), [0x00], null);
+        this.wire.writeBytes(this.registerDisplaySetup | 0x01 | (blinkRate << 1), [0x00], () => {
+        });
     }
 
     setBufferRow(row, value, update = true) {
@@ -46,7 +49,8 @@ module.exports = class LedBackpack {
             bytes.push(item & 0xFF);
             bytes.push((item >> 8) & 0xFF)
         });
-        this.wire.writeBytes(0x00, bytes, null);
+        this.wire.writeBytes(0x00, bytes, () => {
+        });
     }
 
     clear() {
