@@ -11,6 +11,16 @@ module.exports = class Segments {
         this.digits = fonts;
     }
 
+    animation(charIndex, charArr, interval = 100) {
+        let i = 0;
+        setInterval(() => {
+            let digit = this.digits[charArr[i]];
+            this.display.setBufferRow(charIndex, digit, false);
+            this.display.writeDisplay();
+            i++;
+        }, interval);
+    }
+
     writeString(string) {
         const chars = string.split('');
         let addDot = false,
@@ -18,6 +28,7 @@ module.exports = class Segments {
         while (i >= 0 && chars.length > 0) {
             const buff = chars.pop();
             let message = this.digits[buff];
+            console.log(message)
             if (addDot) message |= 0x4000;
 
             if (buff === '.') {
@@ -45,6 +56,10 @@ module.exports = class Segments {
         if (charNumber > 3) return;
         //Set the appropriate digit
         this.display.setBufferRow(charNumber, value);
+    }
+
+    setBrightness(brightness){
+        this.display.setBrightness(brightness);
     }
 
     clear() {
