@@ -3,18 +3,18 @@
 const i2c = require('i2c');
 
 module.exports = class LedBackpack {
-    registerDisplaySetup = 0x80;
-    registerSystemSetup = 0x20;
-    registerDimming = 0xE0;
-    addressKeyData = 0x40;
-    blinkRateOff = 0x00;
-    blinkRate2Hz = 0x01;
-    blinkRate1Hz = 0x02;
-    blinkRateHalfHz = 0x03;
 
     constructor(address = 0x70, bus = 1) {
         this.wire = new i2c(address, {device: '/dev/i2c-' + bus});
         this.buffer = [0x0000, 0x0000, 0x0000, 0x0000];
+        this.registerDisplaySetup = 0x80;
+        this.registerSystemSetup = 0x20;
+        this.registerDimming = 0xE0;
+        this.addressKeyData = 0x40;
+        this.blinkRateOff = 0x00;
+        this.blinkRate2Hz = 0x01;
+        this.blinkRate1Hz = 0x02;
+        this.blinkRateHalfHz = 0x03;
         this.wire.writeBytes(this.registerDisplaySetup | 0x01, [0x00], () => {
         });
         this.setBlinkRate(this.blinkRateOff);
