@@ -30,7 +30,7 @@ module.exports = class LedBackpack {
 
     setBlinkRate(blinkRate) {
         if (blinkRate > this.blinkRateHalfHz) blinkRate = this.blinkRateOff;
-        this.wire.writeBytesSync(this.registerDisplaySetup | 0x01 | (blinkRate << 1), [0x00], null);
+        this.wire.writeBytes(this.registerDisplaySetup | 0x01 | (blinkRate << 1), [0x00], null);
     }
 
     setBufferRow(row, value, update = true) {
