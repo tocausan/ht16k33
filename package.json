@@ -1,17 +1,13 @@
 {
   "name": "ht16k33",
   "version": "1.0.0",
-  "main": "index.js",
-  "directories": {
-    "example": "examples"
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "tocausan",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "i2c": "^0.2.3"
+    "i2c": "^0.2.3",
+    "moment": "^2.22.2"
   }
 }
