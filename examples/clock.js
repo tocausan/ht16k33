@@ -5,6 +5,6 @@ const display = new Segments(0x70, 1);
 display.writeString('clock');
 
 setInterval(() => {
-    const time = moment().format('mmss');
+    const time = moment().format('HHmm');
     display.writeString(time);
 }, .5);
