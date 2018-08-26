@@ -6,10 +6,9 @@ let i = 1;
 
 setInterval(() => {
     const time = moment().format('HHmm');
-    if(i > 4) i = 1;
+    if (i > 4) i = 1;
     let str = time.split('');
     str.splice(i, 0, '.');
-  //  console.log(i, str.join('').toString());
-    display.writeString(str.join('').toString());
+    display.writeString(str.join(''));
     i++;
 }, 250);
