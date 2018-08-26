@@ -1,7 +1,7 @@
 'use strict';
 
-const Backpack = require('./backpack'),
-    fonts = require('./14-segments-fonts');
+const Backpack = require('./backpack');
+const fonts = require('./14-segments-fonts');
 
 module.exports = class Segments {
     constructor(address, bus) {
@@ -11,38 +11,33 @@ module.exports = class Segments {
         this.digits = fonts;
     }
 
-    animation(charIndex, charArr, interval = 100) {
+    getStringBinaries(str) {
+        const result = [];
+        str.split('').forEach((item, index) => {
+            const digit = this.digits[item];
+            if (item == '.' && index > 0) result[index - 1] |= this.digits['.'];
+            else result.push(digit);
+        });
+
+        return result;
+    }
+
+    rollAnimation(charIndex, charArr, interval = 100, duration = 1000) {
         let i = 0;
-        setInterval(() => {
+        const animation = setInterval(() => {
             let digit = this.digits[charArr[i]];
             this.display.setBufferRow(charIndex, digit, false);
             this.display.writeDisplay();
             i++;
         }, interval);
+        setTimeout(() => clearInterval(animation), duration);
     }
 
-    writeString(string) {
-        const chars = string.split('');
-        let addDot = false,
-            i = 3;
-        while (i >= 0 && chars.length > 0) {
-            const buff = chars.pop();
-            let message = this.digits[buff];
-            console.log(message)
-            if (addDot) message |= 0x4000;
-
-            if (buff === '.') {
-                addDot = true;
-            } else {
-                addDot = false;
-                this.display.setBufferRow(i, message, false);
-                i--;
-            }
-        }
-        while (i >= 0) {
-            this.display.setBufferRow(i, 0, false);
-            i--;
-        }
+    writeString(str) {
+        const binaries = this.getStringBinaries(str);
+        binaries.forEach((item, index) => {
+            this.display.setBufferRow(index, item, false);
+        });
         this.display.writeDisplay();
     }
 
@@ -58,7 +53,7 @@ module.exports = class Segments {
         this.display.setBufferRow(charNumber, value);
     }
 
-    setBrightness(brightness){
+    setBrightness(brightness) {
         this.display.setBrightness(brightness);
     }
 
