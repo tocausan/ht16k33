@@ -2,29 +2,32 @@ const moment = require('moment');
 const Segments = require('../library/14-segments');
 const display = new Segments(0x70, 1);
 
-let time = getTime();
-
 display.rollAnimation(1, '-\\|/');
 
 setInterval(() => {
-    time = getTime();
-    const str = roll_0(time);
+    const time = moment().format('HHss');
+    let str = zeroToRoll(time);
+    str = toDot(str);
     display.setBrightness(3);
     display.writeString(str);
 
     //console.log(str);
 }, 100);
 
-// GET TIME FORMAT
-function getTime() {
-    return moment().format('HH.ss');
+// DOT
+let dot = true;
+
+function toDot(str) {
+    const strArray = str.split('');
+    if (dot) strArray.splice(2, 0, '.');
+    dot = !dot;
+    return strArray.join('');
 }
 
-// ROLL 0
-
+// ZERO TO ROLL
 let rollIndex = 0;
 
-function roll_0(str) {
+function zeroToRoll(str) {
     const rollChars = '-\\|/';
 
     if (rollIndex > (rollChars.length - 1)) rollIndex = 0;
