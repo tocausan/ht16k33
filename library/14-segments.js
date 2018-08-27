@@ -1,12 +1,12 @@
 'use strict';
 
-const Backpack = require('./backpack');
+//const Backpack = require('./backpack');
 const moment = require('moment');
 const fonts = require('./14-segments-fonts');
 
 class Segments {
     constructor(address = 0x70, bus = 1) {
-        this.display = new Backpack(address, bus);
+        // this.display = new Backpack(address, bus);
         this.digits = fonts;
     }
 
@@ -47,7 +47,7 @@ class Segments {
 
     clear() {
         if (this.interval !== undefined) clearInterval(this.interval);
-        this.display.clear();
+         this.display.clear();
     }
 
     clock() {
@@ -61,32 +61,59 @@ class Segments {
         }, 500);
     }
 
-    countDown() {
+    countDown(duration = 60) {
+        return new Promise(resolve => {
+            this.interval = setInterval(() => {
+                // return clear() when 00:00
+                if (duration <= 1) {
+                    this.clear();
+                    resolve();
+                }
 
+                let str = '';
+                const minutes = Math.floor(duration / 60).toString();
+                const seconds = Math.floor(duration - (minutes * 60)).toString();
+
+                str += minutes.length > 1 ? minutes : '0' + minutes;
+                str += seconds.length > 1 ? seconds : '0' + seconds;
+
+                if ((parseInt(seconds) % 2) === 0) {
+                    let strArray = str.split('');
+                    strArray.splice(2, 0, '.');
+                    str = strArray.join('');
+                }
+                this.writeString(str);
+
+                duration -= .1;
+            }, 100);
+        });
     }
 
-    async rollDigits(interval = 100, duration = null, direction = true) {
-        const chars = '-\\|/';
-        let i = 0;
+    rollDigits(interval = 100, duration = null, direction = true) {
+        return new Promise(resolve => {
+            const chars = '-\\|/';
+            let i = 0;
 
-        this.interval = setInterval(() => {
-            if (i < 0) i = chars.length - 1;
-            if (i > (chars.length - 1)) i = 0;
+            this.interval = setInterval(() => {
+                if (i < 0) i = chars.length - 1;
+                if (i > (chars.length - 1)) i = 0;
 
-            let str = '';
-            for (let j = 0; j < 4; j++) {
-                str += chars[i];
+                let str = '';
+                for (let j = 0; j < 4; j++) {
+                    str += chars[i];
+                }
+                this.writeString(str);
+                direction ? i++ : i--;
+            }, interval);
+
+            // return clear() after duration if set
+            if (duration !== null) {
+                setTimeout(() => {
+                    this.clear();
+                    resolve();
+                }, duration)
             }
-            this.writeString(str);
-            direction ? i++ : i--;
-        }, interval);
-
-        // return clear() after duration if set
-        if (duration !== null) {
-            setTimeout(() => {
-                return this.clear();
-            }, duration)
-        }
+        });
     }
 }
 
