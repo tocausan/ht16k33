@@ -1,13 +1,12 @@
 'use strict';
 
-const Backpack = require('./backpack');
+//const Backpack = require('./backpack');
+const moment = require('moment');
 const fonts = require('./14-segments-fonts');
 
-module.exports = class Segments {
-    constructor(address, bus) {
-        address = address || 0x70;
-        bus = bus || 1;
-        this.display = new Backpack(address, bus);
+class Segments {
+    constructor(address = 0x70, bus = 1) {
+        //this.display = new Backpack(address, bus);
         this.digits = fonts;
     }
 
@@ -26,8 +25,8 @@ module.exports = class Segments {
         let i = 0;
         const animation = setInterval(() => {
             let digit = this.digits[charArr[i]];
-            this.display.setBufferRow(charIndex, digit, false);
-            this.display.writeDisplay();
+            // this.display.setBufferRow(charIndex, digit, false);
+            // this.display.writeDisplay();
             i++;
         }, interval);
         setTimeout(() => clearInterval(animation), duration);
@@ -36,28 +35,60 @@ module.exports = class Segments {
     writeString(str) {
         const binaries = this.getStringBinaries(str);
         binaries.forEach((item, index) => {
-            this.display.setBufferRow(index, item, false);
+            // this.display.setBufferRow(index, item, false);
         });
-        this.display.writeDisplay();
+        console.log(str);
+        // this.display.writeDisplay();
     }
 
     writeChar(charNumber, char) {
         if (charNumber > 3) return;
-        this.display.setBufferRow(charNumber, this.digits[char]);
+        // this.display.setBufferRow(charNumber, this.digits[char]);
     }
 
     writeRaw(charNumber, value) {
         //Sets a digit using the raw 16-bit value"
         if (charNumber > 3) return;
         //Set the appropriate digit
-        this.display.setBufferRow(charNumber, value);
+        // this.display.setBufferRow(charNumber, value);
     }
 
     setBrightness(brightness) {
-        this.display.setBrightness(brightness);
+        // this.display.setBrightness(brightness);
     }
 
     clear() {
-        this.display.clear();
+        if (this.interval !== undefined) clearInterval(this.interval);
+        // this.display.clear();
     }
-};
+
+    clock() {
+        let dot = true;
+        this.interval = setInterval(() => {
+            const time = moment().format('HHmm');
+            let str = time.split('');
+            if (dot) str.splice(2, 0, '.');
+            dot = !dot;
+            this.writeString(str.join(''));
+        }, 500);
+    }
+
+    rollDigits(direction = true) {
+        const chars = '-\\|/';
+        let i = 0;
+
+        this.interval = setInterval(() => {
+            if (i < 0) i = chars.length - 1;
+            if (i > (chars.length - 1)) i = 0;
+
+            let str = '';
+            for (let j = 0; j < 4; j++) {
+                str += chars[i];
+            }
+            this.writeString(str);
+            direction ? i++ : i--;
+        }, 100);
+    }
+}
+
+module.exports = Segments;
