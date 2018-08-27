@@ -5,8 +5,6 @@ const i2c = require('i2c');
 module.exports = class LedBackpack {
 
     constructor(address = 0x70, bus = 1) {
-        this.wire = new i2c(address, {device: '/dev/i2c-' + bus});
-        this.buffer = [0x0000, 0x0000, 0x0000, 0x0000];
         this.registerDisplaySetup = 0x80;
         this.registerSystemSetup = 0x20;
         this.registerDimming = 0xE0;
@@ -15,17 +13,19 @@ module.exports = class LedBackpack {
         this.blinkRate2Hz = 0x01;
         this.blinkRate1Hz = 0x02;
         this.blinkRateHalfHz = 0x03;
+
+        this.wire = new i2c(address, {device: '/dev/i2c-' + bus});
+        this.buffer = [0x0000, 0x0000, 0x0000, 0x0000];
         this.wire.writeBytes(this.registerSystemSetup | 0x01, [0x00], () => {
         });
         this.setBlinkRate(this.blinkRateOff);
         this.setBrightness(10);
-        this.clear();
+       // this.clear();
     }
 
     setBrightness(brightness = 15) {
         // brightness 0-15
-        if (brightness > 15) brightness = 15;
-        if (brightness < 0) brightness = 0;
+        brightness = Math.max(0, Math.min(15, brightness));
         this.wire.writeBytes(this.registerDimming | brightness, [0x00], () => {
         });
     }
