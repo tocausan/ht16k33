@@ -15,12 +15,13 @@ setInterval(() => {
 }, 100);
 
 // DOT
-let dot = true;
+let dotIndex = 0;
 
 function toDot(str) {
     const strArray = str.split('');
-    if (dot) strArray.splice(2, 0, '.');
-    dot = !dot;
+    if (dotIndex > 10) dotIndex = 0;
+    if ((dotIndex % 5) === 0) strArray.splice(2, 0, '.');
+    dotIndex++;
     return strArray.join('');
 }
 

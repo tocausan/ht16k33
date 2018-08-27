@@ -17,7 +17,6 @@ class Segments {
             if (item == '.' && index > 0) result[index - 1] |= this.digits['.'];
             else result.push(digit);
         });
-
         return result;
     }
 
