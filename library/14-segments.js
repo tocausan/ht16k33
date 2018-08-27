@@ -20,17 +20,6 @@ class Segments {
         return result;
     }
 
-    rollAnimation(charIndex, charArr, interval = 100, duration = 1000) {
-        let i = 0;
-        const animation = setInterval(() => {
-            let digit = this.digits[charArr[i]];
-            this.display.setBufferRow(charIndex, digit, false);
-            this.display.writeDisplay();
-            i++;
-        }, interval);
-        setTimeout(() => clearInterval(animation), duration);
-    }
-
     writeString(str) {
         const binaries = this.getStringBinaries(str);
         binaries.forEach((item, index) => {
@@ -76,7 +65,7 @@ class Segments {
 
     }
 
-    rollDigits(direction = true) {
+    async rollDigits(interval = 100, duration = null, direction = true) {
         const chars = '-\\|/';
         let i = 0;
 
@@ -90,7 +79,14 @@ class Segments {
             }
             this.writeString(str);
             direction ? i++ : i--;
-        }, 100);
+        }, interval);
+
+        // return clear() after duration if set
+        if (duration !== null) {
+            setTimeout(() => {
+                return this.clear();
+            }, duration)
+        }
     }
 }
 

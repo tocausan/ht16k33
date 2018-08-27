@@ -2,26 +2,24 @@ const moment = require('moment');
 const Segments = require('../library/14-segments');
 const display = new Segments(0x70, 1);
 
-display.rollAnimation(1, '-\\|/');
+display.rollDigits(100, 3000, true)
+    .then(() => clockNRoll());
 
-setInterval(() => {
-    const time = moment().format('HHss');
-    let str = zeroToRoll(time);
-    str = toDot(str);
-    display.setBrightness(3);
-    display.writeString(str);
-
-    //console.log(str);
-}, 100);
+function clockNRoll() {
+    setInterval(() => {
+        const time = moment().format('HHss');
+        let str = zeroToRoll(time);
+        str = toDot(str);
+        display.setBrightness(3);
+        display.writeString(str);
+    }, 100);
+}
 
 // DOT
-let dotIndex = 0;
-
 function toDot(str) {
+    const seconds = moment().format('ss');
     const strArray = str.split('');
-    if (dotIndex > 10) dotIndex = 0;
-    if ((dotIndex % 5) === 0) strArray.splice(2, 0, '.');
-    dotIndex++;
+    if ((seconds % 2) === 0) strArray.splice(2, 0, '.');
     return strArray.join('');
 }
 
