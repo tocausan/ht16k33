@@ -15,7 +15,7 @@ module.exports = class LedBackpack {
         this.blinkRate2Hz = 0x01;
         this.blinkRate1Hz = 0x02;
         this.blinkRateHalfHz = 0x03;
-        this.wire.writeBytes(this.registerDisplaySetup | 0x01, [0x00], () => {
+        this.wire.writeBytes(this.registerSystemSetup | 0x01, [0x00], () => {
         });
         this.setBlinkRate(this.blinkRateOff);
         this.setBrightness(10);
