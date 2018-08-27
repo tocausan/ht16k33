@@ -7,7 +7,7 @@ display.rollDigits(100, 3000, true)
 
 function clockNRoll() {
     setInterval(() => {
-        const time = moment().format('HHss');
+        const time = moment().format('HHmm');
         let str = zeroToRoll(time);
         str = toDot(str);
         display.setBrightness(3);
