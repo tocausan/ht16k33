@@ -1,12 +1,12 @@
 'use strict';
 
-//const Backpack = require('./backpack');
+const Backpack = require('./backpack');
 const moment = require('moment');
 const fonts = require('./14-segments-fonts');
 
 class Segments {
     constructor(address = 0x70, bus = 1) {
-        // this.display = new Backpack(address, bus);
+         this.display = new Backpack(address, bus);
         this.digits = fonts;
     }
 
@@ -64,7 +64,7 @@ class Segments {
     countDown(duration = 60) {
         return new Promise(resolve => {
             this.interval = setInterval(() => {
-                // return clear() when 00:00
+                //return clear() when 00:00
                 if (duration <= 1) {
                     this.clear();
                     resolve();
@@ -106,7 +106,7 @@ class Segments {
                 direction ? i++ : i--;
             }, interval);
 
-            // return clear() after duration if set
+            //return clear() after duration if set
             if (duration !== null) {
                 setTimeout(() => {
                     this.clear();
