@@ -1,12 +1,12 @@
 'use strict';
 
-//const Backpack = require('./backpack');
+const Backpack = require('./backpack');
 const moment = require('moment');
 const fonts = require('./14-segments-fonts');
 
 class Segments {
     constructor(address = 0x70, bus = 1) {
-        //this.display = new Backpack(address, bus);
+        this.display = new Backpack(address, bus);
         this.digits = fonts;
     }
 
@@ -25,8 +25,8 @@ class Segments {
         let i = 0;
         const animation = setInterval(() => {
             let digit = this.digits[charArr[i]];
-            // this.display.setBufferRow(charIndex, digit, false);
-            // this.display.writeDisplay();
+            this.display.setBufferRow(charIndex, digit, false);
+            this.display.writeDisplay();
             i++;
         }, interval);
         setTimeout(() => clearInterval(animation), duration);
@@ -35,31 +35,31 @@ class Segments {
     writeString(str) {
         const binaries = this.getStringBinaries(str);
         binaries.forEach((item, index) => {
-            // this.display.setBufferRow(index, item, false);
+            this.display.setBufferRow(index, item, false);
         });
         console.log(str);
-        // this.display.writeDisplay();
+        this.display.writeDisplay();
     }
 
     writeChar(charNumber, char) {
         if (charNumber > 3) return;
-        // this.display.setBufferRow(charNumber, this.digits[char]);
+        this.display.setBufferRow(charNumber, this.digits[char]);
     }
 
     writeRaw(charNumber, value) {
         //Sets a digit using the raw 16-bit value"
         if (charNumber > 3) return;
         //Set the appropriate digit
-        // this.display.setBufferRow(charNumber, value);
+        this.display.setBufferRow(charNumber, value);
     }
 
     setBrightness(brightness) {
-        // this.display.setBrightness(brightness);
+        this.display.setBrightness(brightness);
     }
 
     clear() {
         if (this.interval !== undefined) clearInterval(this.interval);
-        // this.display.clear();
+        this.display.clear();
     }
 
     clock() {
@@ -71,6 +71,10 @@ class Segments {
             dot = !dot;
             this.writeString(str.join(''));
         }, 500);
+    }
+
+    countDown() {
+
     }
 
     rollDigits(direction = true) {
