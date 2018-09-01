@@ -6,25 +6,42 @@ const fonts = require('./14-segments-fonts');
 
 class Segments {
     constructor(address = 0x70, bus = 1) {
-         this.display = new Backpack(address, bus);
+        this.display = new Backpack(address, bus);
         this.digits = fonts;
+        this.timeFormat = 'HHmm';
+        this.rollChars = '-\\|/';
     }
 
-    getStringBinaries(str) {
-        const result = [];
-        str.split('').forEach((item, index) => {
-            const digit = this.digits[item];
-            if (item == '.' && index > 0) result[index - 1] |= this.digits['.'];
-            else result.push(digit);
-        });
-        return result;
+    getFontChar(str) {
+        const charArray = [];
+        let hashtagIndex = 0;
+
+        for (let i = 0; i < str.length; i++) {
+            if (str[i] === '#') {
+                const specialCharMatch = str.match(/#(.*?)_/g);
+                const char = specialCharMatch[hashtagIndex];
+                const binary = this.digits[char];
+
+                if (binary != undefined) {
+                    charArray.push(char);
+                    i += (char.length - 1);
+                } else {
+                    charArray.push(str[i]);
+                }
+                hashtagIndex++;
+            } else {
+                charArray.push(str[i]);
+            }
+        }
+        return charArray;
     }
 
     writeString(str) {
-        const binaries = this.getStringBinaries(str);
+        const binaries = this.getFontChar(str);
         binaries.forEach((item, index) => {
             this.display.setBufferRow(index, item, false);
         });
+        console.clear();
         console.log(str);
         this.display.writeDisplay();
     }
@@ -47,13 +64,13 @@ class Segments {
 
     clear() {
         if (this.interval !== undefined) clearInterval(this.interval);
-         this.display.clear();
+        this.display.clear();
     }
 
     clock() {
         let dot = true;
         this.interval = setInterval(() => {
-            const time = moment().format('HHmm');
+            const time = moment().format(this.timeFormat);
             let str = time.split('');
             if (dot) str.splice(2, 0, '.');
             dot = !dot;
@@ -89,9 +106,13 @@ class Segments {
         });
     }
 
+    setRollChars(chars) {
+        this.rollChars = chars;
+    }
+
     rollDigits(interval = 100, duration = null, direction = true) {
         return new Promise(resolve => {
-            const chars = '-\\|/';
+            const chars = this.getFontChar(this.rollChars);
             let i = 0;
 
             this.interval = setInterval(() => {

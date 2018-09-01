@@ -2,9 +2,16 @@
   "name": "ht16k33",
   "version": "1.0.0",
   "scripts": {},
-  "author": "tocausan",
-  "license": "ISC",
-  "description": "",
+  "author": {
+    "name": "Tomas Caufriez",
+    "email": "tocausan@gmail.com",
+    "url": "https://github.com/tocausan"
+  },
+  "bugs": {
+    "url": "https://github.com/tocausan/moment/issues"
+  },
+  "license": "MIT",
+  "description": "14 segments library for HT16K33",
   "dependencies": {
     "i2c": "^0.2.3",
     "moment": "^2.22.2"
