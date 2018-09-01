@@ -4,6 +4,13 @@ const Segments = require('../library/14-segments'),
 // set roll chars
 // start the roll in one direction for 30s
 // then change roll direction
-display.setRollChars('#roll0_#roll1_#roll2_#roll3_');
-display.rollDigits(100, 30000, true)
-    .then(() => display.rollDigits(100, null, false));
+const rollChars = [];
+for (let i = 0; i <= 14; i++) {
+    rollChars.push('#fullClock' + i + '_');
+}
+for (let i = 0; i <= 14; i++) {
+    rollChars.push('#emptyClock' + i + '_');
+}
+
+display.setRollChars(rollChars);
+display.rollDigits(100, 30000, true);
