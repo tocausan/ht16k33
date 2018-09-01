@@ -7,8 +7,8 @@ const rollChars = [];
 for (let i = 0; i <= 8; i++) {
     rollChars.push('#fullClock' + i + '_');
 }
-for (let i = 0; i <= 8; i++) {
-    rollChars.push('#emptyClock' + i + '_');
+for (let i = 8; i >= 0; i--) {
+    rollChars.push('#fullClock' + i + '_');
 }
 
 display.setRollChars(rollChars.join(''));
