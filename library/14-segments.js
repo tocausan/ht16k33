@@ -61,8 +61,6 @@ class Segments {
         binaries.forEach((item, index) => {
             this.display.setBufferRow(index, item, false);
         });
-        console.clear();
-        console.log(str);
         this.display.writeDisplay();
     }
 

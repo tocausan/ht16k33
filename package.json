@@ -2,11 +2,7 @@
   "name": "ht16k33",
   "version": "1.0.0",
   "scripts": {},
-  "author": {
-    "name": "Tomas Caufriez",
-    "email": "tocausan@gmail.com",
-    "url": "https://github.com/tocausan"
-  },
+  "author": "Tomas Caufriez <tocausan@gmail.com> (https://github.com/tocausan)",
   "bugs": {
     "url": "https://github.com/tocausan/moment/issues"
   },
@@ -15,5 +11,17 @@
   "dependencies": {
     "i2c": "^0.2.3",
     "moment": "^2.22.2"
-  }
+  },
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/tocausan/ht16k33.git"
+  },
+  "keywords": [],
+  "homepage": "https://gitlab.com/tocausan/ht16k33#readme",
+  "license": "MIT"
 }
