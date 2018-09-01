@@ -13,4 +13,4 @@ for (let i = 0; i <= 14; i++) {
 }
 
 display.setRollChars(rollChars.join(''));
-display.rollDigits(100, null, true);
+display.rollDigits(50, null, true);
