@@ -6,7 +6,7 @@ const fonts = require('./14-segments-fonts');
 
 class Segments {
     constructor(address = 0x70, bus = 1) {
-        //this.display = new Backpack(address, bus);
+        this.display = new Backpack(address, bus);
         this.digits = fonts;
         this.timeFormat = 'HHmm';
         this.rollChars = '-\\|/';
