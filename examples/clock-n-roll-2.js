@@ -4,11 +4,11 @@ const display = new Segments(0x70, 1);
 
 //set roll char
 const rollChars = [];
-for (let i = 0; i <= 8; i++) {
-    rollChars.push('#fullClock' + i + '_');
+for (let i = 0; i <= 5; i++) {
+    rollChars.push('#circle' + i + '_');
 }
-for (let i = 8; i >= 0; i--) {
-    rollChars.push('#fullClock' + i + '_');
+for (let i = 8; i >= 5; i--) {
+    rollChars.push('#circle' + i + '_');
 }
 
 display.setRollChars(rollChars.join(''));
