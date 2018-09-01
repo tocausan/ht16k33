@@ -12,7 +12,6 @@ for (let i = 0; i <= 14; i++) {
 }
 
 display.setRollChars(rollChars.join(''));
-
 display.rollDigits(50, 1500, true)
     .then(() => clockNRoll());
 
@@ -38,8 +37,6 @@ function toDot(str) {
 let rollIndex = 0;
 
 function zeroToRoll(str) {
-    const rollChars = '-\\|/';
-
     if (rollIndex > (rollChars.length - 1)) rollIndex = 0;
     let resultStr = '';
     str.split('').forEach(item => {
