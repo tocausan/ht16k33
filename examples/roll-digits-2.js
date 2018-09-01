@@ -12,5 +12,5 @@ for (let i = 0; i <= 14; i++) {
     rollChars.push('#emptyClock' + i + '_');
 }
 
-display.setRollChars(rollChars);
-display.rollDigits(100, 30000, true);
+display.setRollChars(rollChars.join(''));
+display.rollDigits(100, null, true);
