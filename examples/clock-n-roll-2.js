@@ -4,15 +4,16 @@ const display = new Segments(0x70, 1);
 
 //set roll char
 const rollChars = [];
-for (let i = 0; i <= 5; i++) {
-    rollChars.push('#circle' + i + '_');
+for (let i = 0; i <= 14; i++) {
+    rollChars.push('#fullClock' + i + '_');
 }
-for (let i = 8; i >= 5; i--) {
-    rollChars.push('#circle' + i + '_');
+for (let i = 0; i <= 14; i++) {
+    rollChars.push('#emptyClock' + i + '_');
 }
 
+// set roll digits and start rolling for 3s then start clock
 display.setRollChars(rollChars.join(''));
-display.rollDigits(50, 1500, true)
+display.rollDigits(50, 3000, true)
     .then(() => clockNRoll());
 
 function clockNRoll() {
@@ -22,7 +23,7 @@ function clockNRoll() {
         str = toDot(str);
         display.setBrightness(3);
         display.writeString(str);
-    }, 1000/rollChars.length);
+    }, 1000 / rollChars.length);
 }
 
 // DOT
