@@ -1,5 +1,5 @@
 const moment = require('moment');
-const Segments = require('../library/14-segments');
+const Segments = require('../').Segments;
 const display = new Segments(0x70, 1);
 
 display.rollDigits(100, 3000, true)

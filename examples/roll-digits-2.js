@@ -1,4 +1,4 @@
-const Segments = require('../library/14-segments'),
+const Segments = require('../').Segments,
     display = new Segments(0x70, 1);
 
 // set roll chars
