@@ -45,12 +45,16 @@ class Segments {
 
         //get binaries
         const binaries = [];
-        chars.forEach(char => {
-            const binaryBuff = this.digits[char];
-            if (binaryBuff !== undefined && binaryBuff !== null) binaries.push(this.digits[char]);
+        chars.forEach((char, index) => {
+            const binary = this.digits[char];
+            if (binary !== undefined && binary !== null) {
+                if (char == '.' && index > 0) binaries[index - 1] |= this.digits['.'];
+                else binaries.push(binary);
+            }
         });
         return binaries;
     }
+
 
     writeString(str) {
         const binaries = this.stringToBinary(str);

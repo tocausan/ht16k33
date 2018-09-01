@@ -20,7 +20,7 @@ module.exports = class LedBackpack {
         });
         this.setBlinkRate(this.blinkRateOff);
         this.setBrightness(10);
-       // this.clear();
+        this.clear();
     }
 
     setBrightness(brightness = 15) {
