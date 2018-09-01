@@ -6,29 +6,32 @@ const fonts = require('./14-segments-fonts');
 
 class Segments {
     constructor(address = 0x70, bus = 1) {
-        this.display = new Backpack(address, bus);
+        //this.display = new Backpack(address, bus);
         this.digits = fonts;
         this.timeFormat = 'HHmm';
         this.rollChars = '-\\|/';
     }
 
-    getFontChar(str) {
+    stringToCharArray(str) {
+        // get special characters
         const charArray = [];
-        let hashtagIndex = 0;
+        const specialCharMatch = str.match(/#(.*?)_/g);
+        let specialCharIndex = 0;
 
         for (let i = 0; i < str.length; i++) {
-            if (str[i] === '#') {
-                const specialCharMatch = str.match(/#(.*?)_/g);
-                const char = specialCharMatch[hashtagIndex];
-                const binary = this.digits[char];
+            if (specialCharMatch != null &&
+                specialCharMatch.length > 0 &&
+                str[i] === '#') {
+                const char = specialCharMatch[specialCharIndex];
+                const digitBinary = this.digits[char];
 
-                if (binary != undefined) {
+                if (digitBinary != undefined) {
                     charArray.push(char);
                     i += (char.length - 1);
                 } else {
                     charArray.push(str[i]);
                 }
-                hashtagIndex++;
+                specialCharIndex++;
             } else {
                 charArray.push(str[i]);
             }
@@ -36,8 +39,21 @@ class Segments {
         return charArray;
     }
 
+    stringToBinary(str) {
+        //get chars
+        const chars = this.stringToCharArray(str);
+
+        //get binaries
+        const binaries = [];
+        chars.forEach(char => {
+            const binaryBuff = this.digits[char];
+            if (binaryBuff !== undefined && binaryBuff !== null) binaries.push(this.digits[char]);
+        });
+        return binaries;
+    }
+
     writeString(str) {
-        const binaries = this.getFontChar(str);
+        const binaries = this.stringToBinary(str);
         binaries.forEach((item, index) => {
             this.display.setBufferRow(index, item, false);
         });
@@ -112,13 +128,14 @@ class Segments {
 
     rollDigits(interval = 100, duration = null, direction = true) {
         return new Promise(resolve => {
-            const chars = this.getFontChar(this.rollChars);
             let i = 0;
+            const chars = this.stringToCharArray(this.rollChars);
 
             this.interval = setInterval(() => {
                 if (i < 0) i = chars.length - 1;
                 if (i > (chars.length - 1)) i = 0;
 
+                //create a string of 4 digits
                 let str = '';
                 for (let j = 0; j < 4; j++) {
                     str += chars[i];
