@@ -4,10 +4,10 @@ const display = new Segments(0x70, 1);
 
 //set roll char
 const rollChars = [];
-for (let i = 0; i <= 14; i++) {
+for (let i = 0; i <= 8; i++) {
     rollChars.push('#fullClock' + i + '_');
 }
-for (let i = 0; i <= 14; i++) {
+for (let i = 8; i <= 14; i++) {
     rollChars.push('#emptyClock' + i + '_');
 }
 
@@ -22,7 +22,7 @@ function clockNRoll() {
         str = toDot(str);
         display.setBrightness(3);
         display.writeString(str);
-    }, 100);
+    }, 1000/rollChars.length);
 }
 
 // DOT
