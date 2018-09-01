@@ -28,7 +28,7 @@ function clockNRoll() {
 // DOT
 function toDot(str) {
     const seconds = moment().format('ss');
-    const strArray = str.split('');
+    const strArray = display.stringToCharArray(str);
     if ((seconds % 2) === 0) strArray.splice(2, 0, '.');
     return strArray.join('');
 }
