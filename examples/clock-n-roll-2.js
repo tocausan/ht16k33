@@ -13,7 +13,7 @@ for (let i = 0; i <= 14; i++) {
 
 // set roll digits and start rolling for 3s then start clock
 display.setRollChars(rollChars.join(''));
-display.rollDigits(50, (1000 / rollChars.length) * 3, true)
+display.rollDigits(50, rollChars.length * 3 * 50, true)
     .then(() => clockNRoll());
 
 function clockNRoll() {
