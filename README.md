@@ -21,7 +21,7 @@ const display = new Segments(0x70, 1);
 ## Examples
 ### A clock
 ```javascript
-const Segments = require('../').Segments,
+const Segments = require('ht16k33').Segments,
     display = new Segments(0x70, 1);
 
 // display a simple clock
@@ -30,7 +30,7 @@ display.clock();
 
 ### Digit roll
 ```javascript
-const Segments = require('../').Segments,
+const Segments = require('ht16k33').Segments,
     display = new Segments(0x70, 1);
 
 // default rolling chars are '-\|/'
@@ -40,7 +40,7 @@ display.rollDigits(100, 30000, true);
 
 ### Custom digit roll
 ```javascript
-const Segments = require('../').Segments,
+const Segments = require('ht16k33').Segments,
     display = new Segments(0x70, 1);
 
 // set rolling chars to 'rolling'
@@ -52,7 +52,7 @@ display.rollDigits(500, null, true);
 
 ### Countdown
 ```javascript
-const Segments = require('../').Segments,
+const Segments = require('ht16k33').Segments,
     display = new Segments(0x70, 1);
 
 // 1h countdown
