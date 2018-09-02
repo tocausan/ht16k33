@@ -1,6 +1,6 @@
 'use strict';
 
-const Segments = require('../').Segments,
+const Segments = require('ht16k33').Segments,
     moment = require('moment'),
     display = new Segments(0x70, 1);
 
