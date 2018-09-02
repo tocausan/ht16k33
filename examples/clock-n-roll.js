@@ -2,7 +2,9 @@ const moment = require('moment');
 const Segments = require('../').Segments;
 const display = new Segments(0x70, 1);
 
-display.rollDigits(100, 3000, true)
+const rollChars = '-\\|/';
+
+display.rollDigits(100, rollChars.length * 3 * 100, true)
     .then(() => clockNRoll());
 
 function clockNRoll() {
@@ -27,8 +29,6 @@ function toDot(str) {
 let rollIndex = 0;
 
 function zeroToRoll(str) {
-    const rollChars = '-\\|/';
-
     if (rollIndex > (rollChars.length - 1)) rollIndex = 0;
     let resultStr = '';
     str.split('').forEach(item => {
