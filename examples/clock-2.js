@@ -1,3 +1,5 @@
+'use strict';
+
 const Segments = require('../').Segments,
     moment = require('moment'),
     display = new Segments(0x70, 1);

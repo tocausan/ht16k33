@@ -1,3 +1,5 @@
+'use strict';
+
 const Segments = require('../').Segments,
     display = new Segments(0x70, 1);
 
