@@ -43,7 +43,8 @@ display.rollDigits(100, 30000, true);
 const Segments = require('../').Segments,
     display = new Segments(0x70, 1);
 
-// set rolling chars to 'rolling
+// set rolling chars to 'rolling'
+// check 'lib/14-segments-font.js' to list all available characters
 display.setRollChars('rolling');
 // roll digits for unlimited time at 2fps
 display.rollDigits(500, null, true);
