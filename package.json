@@ -21,6 +21,6 @@
     "type": "git",
     "url": "git+ssh://git@github.com:tocausan/ht16k33.git"
   },
-  "keywords": [],
+  "keywords": ["hk16k33", "display", "adafruit", "fourteen-segment", "led-backpack"],
   "homepage": "https://github.com/tocausan/ht16k33#readme"
 }
